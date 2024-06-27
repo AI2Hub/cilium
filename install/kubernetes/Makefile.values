@@ -36,6 +36,7 @@ export CILIUM_NODEINIT_VERSION:=19fb149fb3d5c7a37d3edfaf10a2be3ab7386661
 export CILIUM_NODEINIT_DIGEST:=sha256:820155cb3b7f00c8d61c1cffa68c44440906cb046bdbad8ff544f5deb1103456
 
 export CILIUM_ENVOY_REPO:=quay.io/cilium/cilium-envoy
+# renovate: datasource=docker depName=quay.io/cilium/cilium-envoy
 export CILIUM_ENVOY_VERSION:=v1.29.6-1d6c2a79b0ff543bed0538ed2f9e236ef0d307af
 export CILIUM_ENVOY_DIGEST:=sha256:fb3c4ee29e3db638156ed69e88731f598738ca60f5fda007450d02bb4aea0d6b
 
