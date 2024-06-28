@@ -1348,8 +1348,26 @@ func (s *Service) createSVCInfoIfNotExist(p *lb.SVC) (*svcInfo, bool, bool,
 	prevSessionAffinity := false
 	prevLoadBalancerSourceRanges := []*cidr.CIDR{}
 
+	proto := p.Frontend.L3n4Addr.L4Addr.Protocol
+	p.Frontend.L3n4Addr.L4Addr.Protocol = "NONE"
+
+	// XXX: on main branch, backends have the protocol set
+	//for _, backend := range p.Backends {
+	//	backend.L3n4Addr.L4Addr.Protocol = "None"
+	//}
+
 	hash := p.Frontend.Hash()
 	svc, found := s.svcByHash[hash]
+	if !found {
+		p.Frontend.L3n4Addr.L4Addr.Protocol = proto
+		//for _, backend := range p.Backends {
+		//	backend.L3n4Addr.L4Addr.Protocol = proto
+		//}
+
+		hash = p.Frontend.Hash()
+		svc, found = s.svcByHash[hash]
+	}
+
 	if !found {
 		// Allocate service ID for the new service
 		addrID, err := AcquireID(p.Frontend.L3n4Addr, uint32(p.Frontend.ID))
